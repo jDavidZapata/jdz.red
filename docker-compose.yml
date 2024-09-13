@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: ./services/web
+      dockerfile: Dockerfile
+    command: python jdzred.py run -h 0.0.0.0
+    volumes:
+      - ./services/web/:/usr/src/app/
+    ports:
+      - 5002:5000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=jdzred
+      - POSTGRES_PASSWORD=jdzred
+      - POSTGRES_DB=jdzred
+  redis:
+    image: redis
+
+volumes:
+  postgres_data:
