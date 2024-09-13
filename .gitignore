@@ -1,8 +1,6 @@
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
+# Developer
 
+**/.DS_Store
 venv
 app.db
 jdzred.log*
