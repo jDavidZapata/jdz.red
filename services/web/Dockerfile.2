@@ -25,10 +25,10 @@ COPY app/ app/
 #COPY app/static /home/app/web/app/static
 #COPY app/media /home/app/web/app/media
 COPY migrations/ migrations/
-COPY jdzred.py config.py boot.sh ./
+COPY jdzred.py config.py boot.2.sh ./
 
 # Ensure the boot script is executable
-RUN chmod +x boot.sh
+RUN chmod +x boot.2.sh
 
 # Set environment variables
 ENV FLASK_APP=jdzred.py
@@ -37,6 +37,6 @@ ENV FLASK_APP=jdzred.py
 EXPOSE 5000
 
 # Define the entry point
-ENTRYPOINT ["./boot.sh"]
+ENTRYPOINT ["./boot.2.sh"]
 
 
