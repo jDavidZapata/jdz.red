@@ -2,6 +2,16 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="{{ url_for('main.index') }}">Baby Names</a>
+      {% if current_user.is_anonymous %}
+      {% else %}
+      {% set unread_message_count = current_user.unread_message_count() %}
+      <a class="navbar-brand" aria-current="page" href="{{ url_for('main.messages') }}" style="visibility: {% if unread_message_count > 0 %}visible{% else %}hidden{% endif %};">{{ _('Messages') }}
+        <span id="message_count" class="badge text-bg-danger"
+              style="visibility: {% if unread_message_count > 0 %}visible{% else %}hidden{% endif %};">
+            {{ unread_message_count }}
+        </span>
+      </a>
+      {% endif %}
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

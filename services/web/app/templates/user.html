@@ -8,11 +8,11 @@
     <div class="description">
         <h1><span class="badge bg-danger rounded-pill">{{ _(user.username) }}</span></h1>
         
-        <div class="card bg-light">
+        <div class="card text-white bg-dark">
+            {% if user.about_me %}
+            <div class="card-header"><h3 class="card-text ">{{ _(user.about_me) }}</h3></div>
+            {% endif %}
             <div class="card-body">
-                {% if user.about_me %}
-                    <p>{{ _(user.about_me) }}</p>
-                {% endif %}
         
                 {% if user.last_seen %}
                     <p>{{ _('Last seen on') }}: {{ moment(user.last_seen).format('LLL') }}</p>
