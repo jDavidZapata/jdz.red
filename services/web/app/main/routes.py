@@ -59,7 +59,7 @@ def index():
                 db.session.add(vote)
                 db.session.commit()
                 flash('Your suggestion has been submitted!')
-                flash(_('You have %(count)s votes left.', count=(4-count)))
+                flash(_('You have %(count)s vote suggestions left.', count=(4-count)))
                 return redirect(url_for("main.index"))
             except Exception as e:
                 # Log the error and notify the user

@@ -8,7 +8,7 @@ from app import db, oauth
 from app.auth import bp
 from app.auth.forms import LoginForm, RegistrationForm, \
     ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User
+from app.models import User, Vote
 from app.auth.email import send_password_reset_email
 from authlib.integrations.base_client.errors import OAuthError
 
@@ -24,6 +24,10 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash(_('Invalid username or password'))
             return redirect(url_for('auth.login'))
+        count = db.session.query(Vote).filter_by(author=user).count()
+
+        flash(_('Congratulations, You are now login!!!'))
+        flash(_('Welcome %(username)s You have %(count)s vote suggestions left.', count=(5-count), username=user.username))    
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or urlsplit(next_page).netloc != '':
@@ -123,7 +127,6 @@ def google_authorize():
     email = user_info['email']
     username = user_info['name'],
     google_id = user_info['sub']
-    print("User info:", user_info)
 
     # Ensure username is a plain string, not a tuple
     if isinstance(username, tuple):
@@ -134,8 +137,13 @@ def google_authorize():
     if user.google_id is None:
         user.google_id = user_info['sub']
         db.session.commit()
-    flash(_('Congratulations, you are now login with google! Welcome %(username)s!!!',username=user.username))
-    flash(_('%(username)s YOU HAVE 5 VOTE SUGGESTIONS', username=user.username))
+
+    # Check the current number of votes for the user
+    count = db.session.query(Vote).filter_by(author=user).count()
+
+    flash(_('Congratulations, You are now login with google!!!'))
+    flash(_('Welcome %(username)s You have %(count)s vote suggestions left.', count=(5-count), username=user.username))    
+
     login_user(user)
     
     return redirect(url_for('main.index'))

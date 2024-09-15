@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 {% import "bootstrap_wtf.html" as wtf %}
+{% import "greeting.html" as greeting %}
 
 {% block header %}
-<h1>Heather's</h1>
+<h1>Heather And David's</h1>
 <h2>Baby Name Suggestions</h2>
 <h1>It's A Boy</h1>
 {% endblock %}
 
 {% block content %}
 {% if current_user.is_authenticated %}
-<div class="section">
-    <h1><span class="badge bg-primary rounded">{{ _('Hi, %(username)s!', username=current_user.username) }}</span></h1>
-</div>
+{% block greeting %}
+    {{ greeting.greeting(current_user) }}
+{% endblock %}
 {% endif %}
 <div class="section">
     <div class="left">
@@ -20,7 +21,9 @@
         <h4>{{ error }}</h4>
         {% endfor %}
         <br>
-        <h3>Make A Name Suggestion</h3>
+        <h3>Help Us Pick A Name</h3>
+        <br>
+        <h3>Please Make A Name Suggestion</h3>
       
         <br>
         <form role="form" method="POST" action="/">
@@ -36,7 +39,7 @@
 
     <div class="right">
         {% if names %}
-        <h3>Help Us With A Name Suggestion</h3>
+        <h3>Name Suggestions</h3>
         <br>
         <div id="names">
             <table class="table table-striped center" style="max-width: 400px;">
