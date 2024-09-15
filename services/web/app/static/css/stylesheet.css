@@ -29,19 +29,19 @@ header {
 }
 
 /* Create two columns/boxes that floats next to each other */
-.left {
+.right {
     float: left;
     width: 55%;
     /*height: 100vh;*/
     height: 100%; /* only for demonstration, should be removed */
-    background: #ccc;
+    background-color: #ccc;
     padding: 5px;
     text-align: center;
     color: red;
 }
 
 
-.right {
+.left {
     float: left;
     padding: 5px;
     width: 45%;
@@ -175,7 +175,7 @@ footer {
     margin-right: auto;
 }
 
-.formright {
+.formleft {
     align-content: center;
     display: inline-flex;
 }

@@ -50,6 +50,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(_('Congratulations, you are now a registered user!  Welcome %(username)s!!!', username=user.username))
+        flash(_('%(username)s YOU HAVE 5 VOTE SUGGESTIONS', username=user.username))
         login_user(user)
         return redirect(url_for('main.index'))
     return render_template('auth/register.html', title=_('Register'),
@@ -134,7 +135,7 @@ def google_authorize():
         user.google_id = user_info['sub']
         db.session.commit()
     flash(_('Congratulations, you are now login with google! Welcome %(username)s!!!',username=user.username))
-    
+    flash(_('%(username)s YOU HAVE 5 VOTE SUGGESTIONS', username=user.username))
     login_user(user)
     
     return redirect(url_for('main.index'))
