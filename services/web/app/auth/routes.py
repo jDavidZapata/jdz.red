@@ -26,7 +26,6 @@ def login():
             return redirect(url_for('auth.login'))
         count = db.session.query(Vote).filter_by(author=user).count()
 
-        flash(_('Congratulations, You are now login!!!'))
         flash(_('Welcome %(username)s You have %(count)s vote suggestions left.', count=(5-count), username=user.username))    
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -53,8 +52,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash(_('Congratulations, you are now a registered user!  Welcome %(username)s!!!', username=user.username))
-        flash(_('%(username)s YOU HAVE 5 VOTE SUGGESTIONS', username=user.username))
+        flash(_('Welcome %(username)s YOU HAVE 5 VOTE SUGGESTIONS', username=user.username))
         login_user(user)
         return redirect(url_for('main.index'))
     return render_template('auth/register.html', title=_('Register'),
@@ -141,7 +139,6 @@ def google_authorize():
     # Check the current number of votes for the user
     count = db.session.query(Vote).filter_by(author=user).count()
 
-    flash(_('Congratulations, You are now login with google!!!'))
     flash(_('Welcome %(username)s You have %(count)s vote suggestions left.', count=(5-count), username=user.username))    
 
     login_user(user)
